@@ -11,15 +11,15 @@ namespace SoDataAnalyzer
             //slimDatasetQuestions();
             //generateEnrichedUserdata();
             analyzeUserContributions();
-            analyzeUserGrowth();
-            analyzeUserLoss();
+            //analyzeUserGrowth();
+            //analyzeUserLoss();
             //createQuestionDictionary();
             //scoreRatioForYears();
         }
 
         static private void slimDatasetAnswers()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\Answers.csv");
+            string[] lines = System.IO.File.ReadAllLines("Answers.csv");
             List<String> mylist = new List<String>();
             int i=0;
             foreach(var line in lines)
@@ -57,13 +57,13 @@ namespace SoDataAnalyzer
                 }
                 i++;
             } 
-            File.WriteAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\Answers_ohneBody.csv", mylist.ToArray());
+            File.WriteAllLines("Answers_ohneBody.csv", mylist.ToArray());
             Console.WriteLine("Answers slimmed down");
         }
 
         static private void slimDatasetQuestions()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\Questions.csv");
+            string[] lines = System.IO.File.ReadAllLines("Questions.csv");
             List<String> mylist = new List<String>();
             int i=0;
             int previousDataId=468;
@@ -111,7 +111,7 @@ namespace SoDataAnalyzer
                 }
                 i++;
             } 
-            File.WriteAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\Questions_ohneBody.csv", mylist.ToArray());
+            File.WriteAllLines("Questions_ohneBody.csv", mylist.ToArray());
             Console.WriteLine("Questions slimmed down.");
         }
         static private void generateEnrichedUserdata()
@@ -124,12 +124,13 @@ namespace SoDataAnalyzer
             foreach(UserModel user in analyzedUsers){
                 fileLines.Add(user.userId+";"+user.numberOfAnswers+";"+user.numberOfNegativeScores+";"+user.numberOfPositiveScores+";"+user.numberOfQuestions+";"+user.numberOfTotalScores+";"+user.activityPeriod.Substring(0,user.activityPeriod.Length-1));
             }
-            File.WriteAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\analyzedUsers.csv", fileLines.ToArray());
+            File.WriteAllLines("analyzedUsers.csv", fileLines.ToArray());
             Console.WriteLine("users analyzed");
         }
         static public void analyzeUserContributions()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\analyzedUsers.csv");
+            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"analyzedUsers.csv");
+            string[] lines = System.IO.File.ReadAllLines(path);
             List<String> mylist = new List<String>();
             int i=0;
             int[] years = new int[9];
@@ -190,7 +191,7 @@ namespace SoDataAnalyzer
         }
         static public void createQuestionDictionary()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\Questions_ohneBody.csv");
+            string[] lines = System.IO.File.ReadAllLines("Questions_ohneBody.csv");
             Dictionary<string, int> wordcounter = new Dictionary<string, int>();
             int i=0;
             foreach(var line in lines)
@@ -235,7 +236,7 @@ namespace SoDataAnalyzer
         }    
         static public void scoreRatioForYears()
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\Questions_ohneBody.csv");
+            string[] lines = System.IO.File.ReadAllLines("Questions_ohneBody.csv");
             Dictionary<string, int> wordcounter = new Dictionary<string, int>();
             int i=0;
             int[] scoreCountForYears = new int[18];
@@ -266,7 +267,7 @@ namespace SoDataAnalyzer
         static private void analyzeUserGrowth()
 
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\analyzedUsers.csv");
+            string[] lines = System.IO.File.ReadAllLines("analyzedUsers.csv");
             List<String> mylist = new List<String>();
             int i=0;
             int[] years = new int[9];
@@ -306,11 +307,10 @@ namespace SoDataAnalyzer
                 year++;
             }
         } 
-
         static private void analyzeUserLoss()
         
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\Käsetorte\Desktop\Studi Fern Hagen\Gestaltung Kooperativer Systeme\3.3\analyzedUsers.csv");
+            string[] lines = System.IO.File.ReadAllLines("analyzedUsers.csv");
             List<String> mylist = new List<String>();
             int i=0;
             int[] years = new int[9];
